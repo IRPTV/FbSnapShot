@@ -108,8 +108,15 @@ namespace WebSnapShot
             Bitmap bitmap = new Bitmap(wb.Width, wb.Height);
             wb.DrawToBitmap(bitmap, new Rectangle(0, 0, wb.Width, wb.Height));
             wb.Dispose();
-
-            bitmap.Save(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+            if (ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim().Contains(".png"))
+            {
+                bitmap.Save(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim(), System.Drawing.Imaging.ImageFormat.Png);
+            }
+            else
+            {
+                if (ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim().Contains(".jpg"))
+                    bitmap.Save(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim(), System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
             richTextBox1.Text += "IMAGE SAVED \n";
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
             richTextBox1.ScrollToCaret();
@@ -117,7 +124,7 @@ namespace WebSnapShot
             bitmap.Dispose();
 
             FileInfo ff = new FileInfo(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
-            if (ff.Length > 500000)
+            if (ff.Length > 300000)
             {
                 render();
             }
@@ -190,7 +197,7 @@ namespace WebSnapShot
                 File.Copy(ConfigurationSettings.AppSettings["OutputPath"].ToString().Trim() + ConfigurationSettings.AppSettings["OutPutFileName"].ToString().Trim() + "_" + DateTimeStr + ".mp4", StaticDestFileName, true);
                 richTextBox1.Text += "COPY FINAL:" + StaticDestFileName + " \n";
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
-                richTextBox1.ScrollToCaret()
+                richTextBox1.ScrollToCaret();
                 Application.DoEvents();
             }
             catch (Exception Ex)
