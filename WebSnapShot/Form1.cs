@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -124,7 +123,7 @@ namespace WebSnapShot
             bitmap.Dispose();
 
             FileInfo ff = new FileInfo(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
-            if (ff.Length > 300000)
+            if (ff.Length > 250000)
             {
                 render();
             }
