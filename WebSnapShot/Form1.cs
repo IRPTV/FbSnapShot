@@ -75,15 +75,7 @@ namespace WebSnapShot
                 Application.DoEvents();
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            int StartMinute = int.Parse(ConfigurationSettings.AppSettings["TimeScheduleMinute"].ToString().Trim());
-            if (DateTime.Now.Minute >= StartMinute && DateTime.Now.Minute <= StartMinute + 1)
-            {
-                timer1.Enabled = false;
-                button1_Click(null, null);
-            }
-        }
+      
         protected void render()
         {
             try
@@ -143,6 +135,17 @@ namespace WebSnapShot
                 timer1.Enabled = true;
             }
             catch { timer1.Enabled = true; }
-        }       
+        }
+
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+
+            int StartMinute = int.Parse(ConfigurationSettings.AppSettings["TimeScheduleMinute"].ToString().Trim());
+            if (DateTime.Now.Minute >= StartMinute && DateTime.Now.Minute <= StartMinute + 1)
+            {
+                timer1.Enabled = false;
+                button1_Click(null, null);
+            }
+        }
     }
 }
