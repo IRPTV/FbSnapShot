@@ -59,13 +59,30 @@ namespace WebSnapShot
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 richTextBox1.ScrollToCaret();
                 Application.DoEvents();
+                try
+                {
+                    File.Delete(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+                }
+                catch { }
                 WebClient webClient = new WebClient();
-                webClient.DownloadFile(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim(), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+                webClient.DownloadFile(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim()+"&dt="+DateTime.Now.ToString("yyyyMMddhhmmss"), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
                 richTextBox1.Text += "IMAGE SAVED \n";
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 richTextBox1.ScrollToCaret();
                 Application.DoEvents();
-                render();
+                if (File.Exists(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim()))
+                    render();
+                else
+                {
+                    button1.ForeColor = Color.White;
+                    button1.Text = "START";
+                    button1.BackColor = Color.Navy;
+                    timer1.Enabled = true;
+                    richTextBox1.Text += "Error  Save Image From API\n";
+                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                    richTextBox1.ScrollToCaret();
+                    Application.DoEvents();
+                }
             }
             catch (Exception Ex)
             {
