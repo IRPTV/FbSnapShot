@@ -65,7 +65,7 @@ namespace WebSnapShot
                 }
                 catch { }
                 WebClient webClient = new WebClient();
-                webClient.DownloadFile(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim()+"&dt="+DateTime.Now.ToString("yyyyMMddhhmmss"), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+                webClient.DownloadFile(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim(), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
                 richTextBox1.Text += "IMAGE SAVED \n";
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 richTextBox1.ScrollToCaret();
@@ -92,7 +92,6 @@ namespace WebSnapShot
                 Application.DoEvents();
             }
         }
-      
         protected void render()
         {
             try
@@ -153,7 +152,6 @@ namespace WebSnapShot
             }
             catch { timer1.Enabled = true; }
         }
-
         private void timer1_Tick_1(object sender, EventArgs e)
         {
 
