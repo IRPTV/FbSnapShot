@@ -90,6 +90,10 @@ namespace WebSnapShot
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 richTextBox1.ScrollToCaret();
                 Application.DoEvents();
+                button1.ForeColor = Color.White;
+                button1.Text = "START";
+                button1.BackColor = Color.Navy;
+                timer1.Enabled = true;
             }
         }
         protected void render()
