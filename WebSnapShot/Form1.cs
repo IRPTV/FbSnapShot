@@ -59,17 +59,25 @@ namespace WebSnapShot
                 richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 richTextBox1.ScrollToCaret();
                 Application.DoEvents();
-                try
+                    try
+                    {
+                        File.Delete(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+                    }
+                    catch { }
+                if (ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim().ToLower().StartsWith("http"))
                 {
-                    File.Delete(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFile(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim(), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
+                    richTextBox1.Text += "IMAGE SAVED \n";
+                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                    richTextBox1.ScrollToCaret();
+                    Application.DoEvents();
                 }
-                catch { }
-                WebClient webClient = new WebClient();
-                webClient.DownloadFile(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim(), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim());
-                richTextBox1.Text += "IMAGE SAVED \n";
-                richTextBox1.SelectionStart = richTextBox1.Text.Length;
-                richTextBox1.ScrollToCaret();
-                Application.DoEvents();
+                else
+                {
+                    File.Copy(ConfigurationSettings.AppSettings["WebUrl"].ToString().Trim(), ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim(),true);
+                }
+
                 if (File.Exists(ConfigurationSettings.AppSettings["ImagePath"].ToString().Trim()))
                     render();
                 else
@@ -78,7 +86,7 @@ namespace WebSnapShot
                     button1.Text = "START";
                     button1.BackColor = Color.Navy;
                     timer1.Enabled = true;
-                    richTextBox1.Text += "Error  Save Image From API\n";
+                    richTextBox1.Text += "Error  Save Image From API or image is not exist\n";
                     richTextBox1.SelectionStart = richTextBox1.Text.Length;
                     richTextBox1.ScrollToCaret();
                     Application.DoEvents();
